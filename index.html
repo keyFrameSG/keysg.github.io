@@ -21,9 +21,9 @@
   <meta property="og:description"
     content="KeySG augments hierarchical 3D scene graphs with multi-modal keyframe information, enabling scalable LLM-powered reasoning and planning in large indoor environments." />
   <meta property="og:url" content="https://keyframesg.github.io/keysg.github.io/" />
-  <meta property="og:image" content="https://keyframesg.github.io/keysg.github.io/figs/cover.png" />
-  <meta property="og:image:width" content="1400" />
-  <meta property="og:image:height" content="1400" />
+  <meta property="og:image" content="https://keyframesg.github.io/keysg.github.io/figs/cover_w.png" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="1229" />
   <meta property="og:locale" content="en_US" />
 
   <!-- ── Twitter Card ─────────────────────────────────────────────── -->
@@ -31,7 +31,7 @@
   <meta name="twitter:title" content="KeySG: Hierarchical Keyframe-Based 3D Scene Graphs" />
   <meta name="twitter:description"
     content="KeySG augments hierarchical 3D scene graphs with multi-modal keyframe information for scalable LLM-powered robot navigation." />
-  <meta name="twitter:image" content="https://keyframesg.github.io/keysg.github.io/figs/cover.png" />
+  <meta name="twitter:image" content="https://keyframesg.github.io/keysg.github.io/figs/cover_w.png" />
 
   <!-- ── JSON-LD Structured Data ──────────────────────────────────── -->
   <script type="application/ld+json">
@@ -208,9 +208,9 @@
     <div class="container is-max-desktop">
       <div class="hero-body" style="padding-top:1rem; padding-bottom:2.5rem;">
         <figure>
-          <img src="figs/cover.png"
+          <img src="figs/cover_w.png"
             alt="KeySG overview: a hierarchical 3D scene graph of a multi-room building where floors, rooms, objects, and functional elements are represented as nodes augmented with multi-modal keyframe information."
-            style="max-width:90%; display:block; margin:0 auto;" />
+            style="max-width:100%; display:block; margin:0 auto;" />
           <figcaption class="subtitle has-text-centered" style="margin-top:1rem;">
             <strong>KeySG</strong> represents indoor environments as hierarchical 3D scene graphs.
             Floor, room, object, and functional-element nodes are augmented with multi-modal
@@ -233,30 +233,7 @@
           <h2 class="title is-3" id="abstract-heading">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              In recent years, 3D scene graphs have emerged as a powerful world representation,
-              offering both geometric accuracy and semantic richness. Combining 3D scene graphs
-              with large language models enables robots to reason, plan, and navigate in complex
-              human-centered environments. However, current approaches for constructing 3D scene
-              graphs are semantically limited to a predefined set of relationships, and their
-              serialization in large environments can easily exceed an LLM's context window.
-            </p>
-            <p>
-              We introduce <strong>KeySG</strong>, a framework that represents 3D scenes as a
-              hierarchical graph consisting of floors, rooms, objects, and functional elements,
-              where nodes are augmented with multi-modal information extracted from keyframes
-              selected to optimize geometric and visual coverage. The keyframes allow us to
-              efficiently leverage VLMs to extract scene information, alleviating the need to
-              explicitly model relationship edges between objects, enabling more general,
-              task-agnostic reasoning and planning. Our approach can process complex and ambiguous
-              queries while mitigating the scalability issues associated with large scene graphs by
-              utilizing a hierarchical multi-modal retrieval-augmented generation (RAG) pipeline to
-              extract relevant context from the graph.
-            </p>
-            <p>
-              Evaluated across three distinct benchmarks — 3D object semantic segmentation,
-              functional element segmentation, and complex query retrieval — KeySG outperforms
-              prior approaches on most metrics, demonstrating its superior semantic richness
-              and efficiency.
+              In recent years, 3D scene graphs have emerged as a powerful world representation, offering both geometric accuracy and semantic richness. Combining 3D scene graphs with large language models enables robots to reason, plan, and navigate in complex human-centered environments. However, current approaches for constructing 3D scene graphs are semantically limited to a predefined set of relationships, and their serialization in large environments can easily exceed an LLM’s context window. We introduce <strong>KeySG</strong>, a framework that represents 3D scenes as a hierarchical graph consisting of floors, rooms, objects, and functional elements, where nodes are augmented with multi-modal information extracted from keyframes selected to optimize geometric and visual coverage. The keyframes allow us to efficiently leverage VLMs to extract scene information, alleviating the need to explicitly model relationship edges between objects, enabling more general, task-agnostic reasoning and planning. Our approach can process complex and ambiguous queries while mitigating the scalability issues associated with large scene graphs by utilizing a hierarchical multi-modal retrieval-augmented generation (RAG) pipeline to extract relevant context from the graph. Evaluated across three distinct benchmarks, 3D object semantic segmentation, functional element segmentation, and complex query retrieval, <strong>KeySG</strong> outperforms prior approaches on most metrics, demonstrating its superior semantic richness and efficiency.
             </p>
           </div>
         </div>
