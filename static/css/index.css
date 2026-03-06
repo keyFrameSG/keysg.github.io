@@ -1,0 +1,179 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.navbar {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.navbar-item {
+  color: #333;
+}
+
+/* ── Hero / title ───────────────────────── */
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.publication-authors {
+  margin-top: 0.5rem;
+}
+
+.author-block {
+  display: inline-block;
+  margin-right: 0.4em;
+}
+
+.author-block a {
+  color: #3273dc;
+  text-decoration: none;
+}
+
+.author-block a:hover {
+  text-decoration: underline;
+}
+
+.author-notes {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.3rem;
+}
+
+.publication-venue {
+  color: #555;
+  font-weight: 600;
+  margin-top: 0.4rem;
+  font-size: 1.1rem;
+}
+
+/* ── Link buttons ───────────────────────── */
+.publication-links {
+  margin-top: 1.2rem;
+}
+
+.publication-links .link-block {
+  display: inline-block;
+  margin: 0.25rem 0.3rem;
+}
+
+.publication-links .button {
+  border-radius: 2px;
+}
+
+/* ── Teaser ─────────────────────────────── */
+.teaser .hero-body {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.teaser img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.teaser .subtitle {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* ── Abstract ───────────────────────────── */
+.abstract-section {
+  padding: 3rem 1.5rem;
+}
+
+.abstract-section .content p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  text-align: justify;
+  color: #333;
+}
+
+/* ── Method ─────────────────────────────── */
+.method-section img {
+  display: block;
+  margin: 1.5rem auto 0.5rem;
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.method-section .method-caption {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.method-section .content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* ── Results ────────────────────────────── */
+.results-section {
+  background-color: #fafafa;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.results-table th {
+  background-color: #363636;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  text-align: center;
+}
+
+.results-table td {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.results-table tr:last-child td {
+  border-bottom: none;
+}
+
+.results-table .ours-row td {
+  font-weight: 700;
+  background-color: #fffde7;
+}
+
+/* ── BibTeX ─────────────────────────────── */
+#BibTeX pre {
+  background: #f5f5f5;
+  border-left: 4px solid #3273dc;
+  border-radius: 3px;
+  padding: 1.2rem 1.4rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+/* ── Footer ─────────────────────────────── */
+.footer {
+  background-color: #f5f5f5;
+  padding: 2rem 1.5rem;
+}
+
+.footer .icon-link {
+  color: #363636;
+  font-size: 1.5rem;
+  margin: 0 0.4rem;
+}
+
+.footer .icon-link:hover {
+  color: #3273dc;
+}

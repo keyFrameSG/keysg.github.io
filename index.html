@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ── Primary SEO ─────────────────────────────────────────────── -->
+  <title>KeySG: Hierarchical Keyframe-Based 3D Scene Graphs</title>
+  <meta name="description"
+    content="KeySG is a hierarchical 3D scene graph framework that augments graph nodes with multi-modal keyframe information, enabling LLM-powered robot navigation and complex query retrieval across floors, rooms, objects, and functional elements." />
+  <meta name="keywords"
+    content="3D scene graphs, keyframe selection, hierarchical scene representation, robot navigation, LLM, VLM, scene understanding, semantic segmentation, retrieval-augmented generation, RAG, ICRA 2026, University of Stuttgart" />
+  <meta name="author" content="Abdelrhman Werby, Dennis Rotondi, Fabio Scaparro, Kai O. Arras" />
+  <link rel="canonical" href="https://keysg-paper.github.io/" />
+
+  <!-- ── Open Graph ───────────────────────────────────────────────── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="KeySG" />
+  <meta property="og:title" content="KeySG: Hierarchical Keyframe-Based 3D Scene Graphs" />
+  <meta property="og:description"
+    content="KeySG augments hierarchical 3D scene graphs with multi-modal keyframe information, enabling scalable LLM-powered reasoning and planning in large indoor environments." />
+  <meta property="og:url" content="https://keysg-paper.github.io/" />
+  <meta property="og:image" content="https://keysg-paper.github.io/figs/cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- ── Twitter Card ─────────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="KeySG: Hierarchical Keyframe-Based 3D Scene Graphs" />
+  <meta name="twitter:description"
+    content="KeySG augments hierarchical 3D scene graphs with multi-modal keyframe information for scalable LLM-powered robot navigation." />
+  <meta name="twitter:image" content="https://keysg-paper.github.io/figs/cover.png" />
+
+  <!-- ── JSON-LD Structured Data ──────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "KeySG: Hierarchical Keyframe-Based 3D Scene Graphs",
+    "description": "KeySG is a framework that represents 3D scenes as a hierarchical graph consisting of floors, rooms, objects, and functional elements, where nodes are augmented with multi-modal information extracted from keyframes selected to optimize geometric and visual coverage.",
+    "keywords": [
+      "3D scene graphs",
+      "keyframe selection",
+      "hierarchical scene representation",
+      "robot navigation",
+      "large language models",
+      "visual language models",
+      "semantic segmentation",
+      "retrieval-augmented generation"
+    ],
+    "author": [
+      { "@type": "Person", "name": "Abdelrhman Werby",
+        "affiliation": { "@type": "Organization", "name": "University of Stuttgart" } },
+      { "@type": "Person", "name": "Dennis Rotondi",
+        "affiliation": { "@type": "Organization", "name": "University of Stuttgart" } },
+      { "@type": "Person", "name": "Fabio Scaparro",
+        "affiliation": { "@type": "Organization", "name": "University of Stuttgart" } },
+      { "@type": "Person", "name": "Kai O. Arras",
+        "affiliation": { "@type": "Organization", "name": "University of Stuttgart" } }
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "IEEE International Conference on Robotics and Automation (ICRA)"
+    },
+    "datePublished": "2026",
+    "url": "https://keysg-paper.github.io/"
+  }
+  </script>
+
+  <!-- ── Fonts & Frameworks (CDN) ─────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;600;700&family=Noto+Sans:wght@400;600&family=Castoro&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- ── Project CSS ───────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="static/css/index.css" />
+
+  <!-- ── Favicon ───────────────────────────────────────────────────── -->
+  <!-- <link rel="icon" type="image/png" href="static/images/favicon.png" /> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <!-- ================================================================
+       NAVBAR
+  ================================================================ -->
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container is-max-desktop">
+      <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+          data-target="navMenu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="navMenu" class="navbar-menu">
+        <div class="navbar-start" style="flex-grow:1; justify-content:center;">
+          <a class="navbar-item" href="#abstract">Abstract</a>
+          <a class="navbar-item" href="#method">Method</a>
+          <a class="navbar-item" href="#results">Results</a>
+          <a class="navbar-item" href="#BibTeX">BibTeX</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       HERO — Title, Authors, Links
+  ================================================================ -->
+  <section class="hero" aria-label="Paper title and authors">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <!-- Venue badge -->
+            <p class="publication-venue">ICRA 2026</p>
+
+            <!-- Title -->
+            <h1 class="title is-2 publication-title">
+              KeySG: Hierarchical Keyframe-Based 3D Scene Graphs
+            </h1>
+
+            <!-- Authors -->
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="#" aria-label="Abdelrhman Werby">Abdelrhman Werby</a><sup>1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#" aria-label="Dennis Rotondi">Dennis Rotondi</a><sup>1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#" aria-label="Fabio Scaparro">Fabio Scaparro</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#" aria-label="Kai O. Arras">Kai O. Arras</a><sup>1</sup>
+              </span>
+            </div>
+
+            <!-- Affiliations -->
+            <div class="is-size-6 publication-authors" style="margin-top:0.6rem;">
+              <span class="author-block">
+                <sup>1</sup> Institute for Artificial Intelligence, University of Stuttgart
+              </span>
+              &nbsp;&nbsp;
+              <span class="author-block">
+                <sup>2</sup> IMPRS-IS
+              </span>
+            </div>
+
+            <!-- CTA buttons -->
+            <div class="column has-text-centered publication-links" style="margin-top:1.4rem;">
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark"
+                  aria-label="Read the paper PDF">
+                  <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark"
+                  aria-label="View on arXiv">
+                  <span class="icon"><i class="ai ai-arxiv" aria-hidden="true"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark"
+                  aria-label="Watch the video">
+                  <span class="icon"><i class="fab fa-youtube" aria-hidden="true"></i></span>
+                  <span>Video</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark"
+                  aria-label="View source code on GitHub">
+                  <span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+            </div>
+            <!-- /CTA buttons -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /HERO -->
+
+  <!-- ================================================================
+       TEASER — Cover figure
+  ================================================================ -->
+  <section class="hero teaser" aria-label="Teaser figure">
+    <div class="container is-max-desktop">
+      <div class="hero-body" style="padding-top:1rem; padding-bottom:2.5rem;">
+        <figure>
+          <img src="figs/cover.svg"
+            alt="KeySG overview: a hierarchical 3D scene graph of a multi-room building where floors, rooms, objects, and functional elements are represented as nodes augmented with multi-modal keyframe information."
+            style="max-width:90%; display:block; margin:0 auto;" />
+          <figcaption class="subtitle has-text-centered" style="margin-top:1rem;">
+            <strong>KeySG</strong> represents indoor environments as hierarchical 3D scene graphs.
+            Floor, room, object, and functional-element nodes are augmented with multi-modal
+            information extracted from a compact set of coverage-optimized keyframes, enabling
+            scalable LLM-powered reasoning and navigation.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+  <!-- /TEASER -->
+
+  <!-- ================================================================
+       ABSTRACT
+  ================================================================ -->
+  <section class="section abstract-section" id="abstract" aria-labelledby="abstract-heading">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3" id="abstract-heading">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              In recent years, 3D scene graphs have emerged as a powerful world representation,
+              offering both geometric accuracy and semantic richness. Combining 3D scene graphs
+              with large language models enables robots to reason, plan, and navigate in complex
+              human-centered environments. However, current approaches for constructing 3D scene
+              graphs are semantically limited to a predefined set of relationships, and their
+              serialization in large environments can easily exceed an LLM's context window.
+            </p>
+            <p>
+              We introduce <strong>KeySG</strong>, a framework that represents 3D scenes as a
+              hierarchical graph consisting of floors, rooms, objects, and functional elements,
+              where nodes are augmented with multi-modal information extracted from keyframes
+              selected to optimize geometric and visual coverage. The keyframes allow us to
+              efficiently leverage VLMs to extract scene information, alleviating the need to
+              explicitly model relationship edges between objects, enabling more general,
+              task-agnostic reasoning and planning. Our approach can process complex and ambiguous
+              queries while mitigating the scalability issues associated with large scene graphs by
+              utilizing a hierarchical multi-modal retrieval-augmented generation (RAG) pipeline to
+              extract relevant context from the graph.
+            </p>
+            <p>
+              Evaluated across three distinct benchmarks — 3D object semantic segmentation,
+              functional element segmentation, and complex query retrieval — KeySG outperforms
+              prior approaches on most metrics, demonstrating its superior semantic richness
+              and efficiency.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /ABSTRACT -->
+
+  <!-- ================================================================
+       METHOD
+  ================================================================ -->
+  <section class="section method-section" id="method" aria-labelledby="method-heading">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered" id="method-heading">Method</h2>
+
+      <!-- Pipeline figure -->
+      <figure style="margin-bottom:0.6rem;">
+        <object
+          data="figs/method.pdf"
+          type="application/pdf"
+          width="100%"
+          style="min-height:520px; border:none;"
+          aria-label="KeySG system pipeline: (A) scene segmentation into floors and rooms, (B) keyframe sampling via HDBSCAN clustering, (C) open-vocabulary object and functional element segmentation, (D) per-keyframe and hierarchical scene description generation, (E) hierarchical RAG querying.">
+          <p class="has-text-centered" style="padding:2rem; background:#f5f5f5; border-radius:4px;">
+            Pipeline figure — <a href="figs/method.pdf">view PDF</a>
+          </p>
+        </object>
+        <figcaption class="method-caption">
+          <strong>KeySG pipeline.</strong>
+          An RGB-D sequence is segmented into floors and rooms (A), a compact keyframe set is
+          selected via HDBSCAN pose clustering (B), objects and functional elements are detected
+          per keyframe and merged into the 3D graph (C), multi-modal scene descriptions are
+          generated and recursively summarized (D), and a hierarchical RAG pipeline retrieves
+          task-relevant graph context for downstream LLM reasoning (E).
+        </figcaption>
+      </figure>
+
+      <div class="content has-text-justified" style="margin-top:1.5rem;">
+        <p>
+          <strong>Keyframe sampling.</strong> Rather than processing every frame of a captured
+          RGB-D sequence, KeySG clusters camera poses in 7-dimensional pose space using HDBSCAN
+          and selects the medoid frame of each cluster. This achieves 96% of peak object recall
+          while using 6.5× fewer frames than covisibility-based alternatives, dramatically
+          reducing VLM inference cost.
+        </p>
+        <p>
+          <strong>Multi-modal node augmentation.</strong> Each 3D node (floor, room, object,
+          functional element) stores text descriptions and CLIP visual embeddings derived from
+          its associated keyframes. Object nodes retain the best-view CLIP embedding for accurate
+          open-vocabulary retrieval. Summaries are propagated up the hierarchy — from objects to
+          rooms, and from rooms to floors — using an LLM-based summarization chain.
+        </p>
+        <p>
+          <strong>Hierarchical RAG querying.</strong> A FAISS-indexed vector database stores
+          text and visual embeddings at every hierarchy level. Given a natural-language query,
+          KeySG decomposes it into floor → room → object → anchor sub-queries, retrieving the
+          most relevant graph nodes at each level via cosine similarity. This top-down traversal
+          confines the LLM's context to only the relevant portion of the graph, solving the
+          scalability bottleneck of prior 3D scene graph methods.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- /METHOD -->
+
+  <!-- ================================================================
+       RESULTS
+  ================================================================ -->
+  <section class="section results-section" id="results" aria-labelledby="results-heading">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered" id="results-heading">Results</h2>
+
+      <p class="has-text-centered" style="margin-bottom:1.8rem; color:#555;">
+        KeySG is evaluated on three benchmarks spanning semantic segmentation, functional element
+        detection, and natural-language object grounding.
+      </p>
+
+      <!-- Benchmark 1 -->
+      <h3 class="title is-5">1 — Open-Vocabulary 3D Semantic Segmentation (Replica)</h3>
+      <div class="table-container" style="margin-bottom:1.5rem;">
+        <table class="results-table" aria-label="Semantic segmentation results on Replica dataset">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>mAcc (%)</th>
+              <th>F-mIoU (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ConceptGraphs</td><td>40.63</td><td>38.24</td>
+            </tr>
+            <tr>
+              <td>HOV-SG</td><td>39.57</td><td>40.16</td>
+            </tr>
+            <tr class="ours-row">
+              <td><strong>KeySG (Ours)</strong></td>
+              <td><strong>45.81</strong></td>
+              <td><strong>46.16</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Benchmark 2 -->
+      <h3 class="title is-5">2 — Hierarchical Object Retrieval (HM3DSem, 2,809 queries)</h3>
+      <div class="table-container" style="margin-bottom:1.5rem;">
+        <table class="results-table" aria-label="Object retrieval results on HM3DSem">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>R@1 IoU≥0.5</th>
+              <th>R@5 IoU≥0.5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HOV-SG</td><td>0.00%</td><td>0.00%</td>
+            </tr>
+            <tr class="ours-row">
+              <td><strong>KeySG (Ours)</strong></td>
+              <td><strong>18.45%</strong></td>
+              <td><strong>45.90%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Benchmark 3 -->
+      <h3 class="title is-5">3 — Language-Guided Object Grounding (Nr3D)</h3>
+      <div class="table-container" style="margin-bottom:1.5rem;">
+        <table class="results-table" aria-label="Object grounding results on Nr3D">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Overall Acc. (IoU≥0.10)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BBQ (prior best)</td><td>28.3%</td>
+            </tr>
+            <tr class="ours-row">
+              <td><strong>KeySG w/ RAG (Ours)</strong></td>
+              <td><strong>49.8%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Qualitative figure -->
+      <h3 class="title is-5" style="margin-top:2rem;">Qualitative Comparisons</h3>
+      <figure>
+        <object
+          data="figs/qualitative.pdf"
+          type="application/pdf"
+          width="100%"
+          style="min-height:480px; border:none;"
+          aria-label="Qualitative comparison of KeySG against ConceptGraphs and HOV-SG on the Replica dataset, showing improved object segmentation masks in complex multi-room scenes.">
+          <p class="has-text-centered" style="padding:2rem; background:#f5f5f5; border-radius:4px;">
+            Qualitative results figure — <a href="figs/qualitative.pdf">view PDF</a>
+          </p>
+        </object>
+        <figcaption class="method-caption">
+          Qualitative comparison on Replica. KeySG produces more complete and accurate
+          instance segmentation masks than prior scene-graph methods, particularly for
+          small objects and densely cluttered regions.
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+  <!-- /RESULTS -->
+
+  <!-- ================================================================
+       BIBTEX
+  ================================================================ -->
+  <section class="section" id="BibTeX" aria-labelledby="bibtex-heading">
+    <div class="container is-max-desktop content">
+      <h2 class="title" id="bibtex-heading">BibTeX</h2>
+      <pre><code>@inproceedings{werby2026keysg,
+  author    = {Werby, Abdelrhman and Rotondi, Dennis and Scaparro, Fabio and Arras, Kai O.},
+  title     = {{KeySG}: Hierarchical Keyframe-Based 3{D} Scene Graphs},
+  booktitle = {Proceedings of the IEEE International Conference on Robotics and Automation (ICRA)},
+  year      = {2026},
+}</code></pre>
+    </div>
+  </section>
+  <!-- /BIBTEX -->
+
+  <!-- ================================================================
+       FOOTER
+  ================================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="#" aria-label="Paper PDF"><i class="fas fa-file-pdf" aria-hidden="true"></i></a>
+        <a class="icon-link" href="#" aria-label="GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
+        <a class="icon-link" href="#" aria-label="arXiv preprint"><i class="ai ai-arxiv" aria-hidden="true"></i></a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered is-size-7" style="color:#888;">
+            <p>
+              Website template adapted from
+              <a href="https://github.com/nerfies/nerfies.github.io" style="color:#888;">NeRFies</a>
+              under a
+              <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:#888;">CC BY-SA 4.0</a>
+              license.
+            </p>
+            <p>
+              &copy; 2026 Socially Intelligent Robotics Lab, University of Stuttgart.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- /FOOTER -->
+
+</body>
+</html>
